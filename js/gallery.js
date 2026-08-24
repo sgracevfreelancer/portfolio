@@ -82,13 +82,14 @@
     });
   }
 
-  function mediaThumb(item) {
+  function mediaThumb(item, isEager = false) {
     if (item.type === "video") {
       const posterAttr = item.poster ? ` poster="${item.poster}"` : "";
       return `<video class="thumb-media" src="${item.path}"${posterAttr} title="${item.title}" muted loop playsinline preload="metadata"></video>
         <span class="play-badge">&#9654;</span>`;
     }
-    return `<img src="${item.path}" alt="${item.title}" title="${item.title}" loading="lazy">`;
+    const loadAttr = isEager ? 'loading="eager"' : 'loading="lazy"';
+    return `<img src="${item.path}" alt="${item.title}" title="${item.title}" ${loadAttr}>`;
   }
 
   function render() {
@@ -131,17 +132,18 @@
     grid.innerHTML = entries
       .map((entry, idx) => {
         const delay = `style="animation-delay:${Math.min(idx * 0.04, 0.4)}s"`;
+        const isEager = idx < 12; // Eagerly load first ~12 items (first 2 rows on desktop)
         if (entry.kind === "single") {
           return `
       <article class="panel gallery-item" ${delay} aria-label="${entry.item.title}">
-        <div class="thumb-wrap">${mediaThumb(entry.item)}</div>
+        <div class="thumb-wrap">${mediaThumb(entry.item, isEager)}</div>
       </article>`;
         }
         const primary = entry.items[0];
         return `
       <article class="panel gallery-item is-group" ${delay} aria-label="${primary.title}">
         <div class="thumb-wrap">
-          <img src="${primary.path}" alt="${primary.title}" title="${primary.title}" loading="lazy">
+          <img src="${primary.path}" alt="${primary.title}" title="${primary.title}" ${isEager ? 'loading="eager"' : 'loading="lazy"'}>
           <span class="stack-badge">1/${entry.items.length}</span>
         </div>
       </article>`;

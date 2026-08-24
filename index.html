@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<link rel="preload" as="fetch" href="data/gallery.json" crossorigin>
 <meta name="google-site-verification" content="xBenQaG6D1QT7sSWvrTsCTPhNg5vCzFRSL6HULhyq6c" />
 </head>
 <body class="locked">
@@ -384,6 +385,17 @@
 
 <script src="js/main.js"></script>
 <script>
+  // Preload image utility
+  function preloadImages(paths) {
+    paths.forEach((path) => {
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = path;
+      document.head.appendChild(link);
+    });
+  }
+
   // Populate "Featured Work" on the home page from the same gallery.json
   // used by the full gallery page. Waits for the password gate before
   // fetching, so this never populates the DOM while locked.
@@ -398,6 +410,10 @@
           [images[i], images[j]] = [images[j], images[i]];
         }
         const featured = images.slice(0, 6);
+        
+        // Preload the featured images
+        preloadImages(featured.map((item) => item.path));
+        
         const wrap = document.getElementById("featured-work");
         wrap.innerHTML = featured
           .map((item) => {
@@ -406,7 +422,7 @@
                 ? `<video class="thumb" src="${item.path}"${
                     item.poster ? ` poster="${item.poster}"` : ""
                   } muted loop playsinline preload="metadata"></video><span class="play-badge">&#9654;</span>`
-                : `<img class="thumb" src="${item.path}" alt="${item.title}" loading="lazy">`;
+                : `<img class="thumb" src="${item.path}" alt="${item.title}" loading="eager">`;
             return `
           <a href="gallery.html" class="panel work-card">
             <div class="thumb-wrap">${media}</div>
