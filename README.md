@@ -1,4 +1,4 @@
-# SGV — Portfolio
+# SGV - Portfolio
 
 Graphic Design portfolio site with a self-updating gallery.
 
