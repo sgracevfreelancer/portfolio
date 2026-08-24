@@ -325,7 +325,7 @@ header.site-nav {
   .nav-links a { width: 100%; }
   .nav-links a {
     display: block;
-    padding: 10px 12px;
+    padding: 0px 12px;
     line-height: 1.25;
   }
   .nav-toggle { display: block; }
