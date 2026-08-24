@@ -596,6 +596,7 @@ header.site-nav {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.03em;
+  width: 100%;
   color: var(--surface);
   background: var(--ink);
   border: 2px solid var(--ink);
@@ -640,8 +641,7 @@ header.site-nav {
 @media (max-width: 640px) {
   .timeline-item { grid-template-columns: 1fr; gap: 4px; }
   .company-logo { max-width: 100px; display:block; }
-  .timeline-item .years { width: 100%;}
-
+}
 /* ---------- featured work ---------- */
 .work-grid {
   display: grid;
