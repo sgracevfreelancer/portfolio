@@ -10,13 +10,13 @@ gallery.html            Full gallery — filter by category, sort by date/name
 css/style.css           Design system (brutalist tokens, panels, layout)
 js/main.js              Shared nav + scroll behavior
 js/gallery.js           Gallery rendering, filtering, sorting, lightbox
-assets/gallery/         Drop your images in here, organized by category folder
+assets/gallery/         Portfolio images and videos, organized by category folder
 data/gallery.json       Auto-generated — do not edit by hand
 scripts/build-gallery.js  Scans assets/gallery/ and writes data/gallery.json
 scripts/watch-gallery.js Watches assets/gallery/ and reruns build-gallery.js automatically
 ```
 
-## Adding real work to the gallery
+## Updating the gallery
 
 1. Drop image **or video** files into a folder under `assets/gallery/`. Each folder
    name becomes a filter category on the gallery page (e.g.
@@ -62,12 +62,6 @@ enable *Settings → Actions → General → Workflow permissions → Read and w
 
 Unbounded (display headlines), Archivo (body copy), and Space Mono (nav,
 labels, badges, buttons) — loaded from Google Fonts in both HTML files.
-
-## Placeholder content
-
-Everything currently in the gallery and the resume-based bio is placeholder —
-swap in real project images, case studies, resume link, and contact details
-before publishing. Placeholder SVGs are safe to delete once you add real work.
 
 ## Running locally
 
