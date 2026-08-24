@@ -390,7 +390,7 @@
     fetch("data/gallery.json")
       .then((r) => r.json())
       .then((items) => {
-        const featured = items.slice(0, 6);
+        const featured = items.filter((item) => item.type === "image").slice(0, 6);
         const wrap = document.getElementById("featured-work");
         wrap.innerHTML = featured
           .map((item) => {
