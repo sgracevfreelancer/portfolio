@@ -1,6 +1,6 @@
-# Shay V — Portfolio
+# SGV — Portfolio
 
-Neo-brutalist portfolio site with a self-updating gallery.
+Graphic Design portfolio site with a self-updating gallery.
 
 ## Structure
 
