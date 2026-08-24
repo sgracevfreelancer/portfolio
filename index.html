@@ -119,8 +119,8 @@
         <h3 style="font-family:var(--font-display); font-size:18px; margin-bottom:6px;">Quick facts</h3>
         <div class="stat-grid">
           <div class="stat panel-strong">
-            <div class="num">8+</div>
-            <div class="label">Years in design, layout &amp; digital content</div>
+            <div class="num">2008</div>
+            <div class="label">Been designing, creating layout &amp; digital content since 2008</div>
           </div>
           <div class="stat panel-strong">
             <div class="num">6</div>
@@ -391,7 +391,13 @@
     fetch("data/gallery.json")
       .then((r) => r.json())
       .then((items) => {
-        const featured = items.filter((item) => item.type === "image").slice(0, 6);
+        // Filter images and shuffle them
+        const images = items.filter((item) => item.type === "image");
+        for (let i = images.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [images[i], images[j]] = [images[j], images[i]];
+        }
+        const featured = images.slice(0, 6);
         const wrap = document.getElementById("featured-work");
         wrap.innerHTML = featured
           .map((item) => {
