@@ -1158,7 +1158,7 @@ footer {
   .logo-grid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 600px) {
-  section { padding: 80px 0; }
+  section { padding: 20px 0; }
   .skills-grid { grid-template-columns: 1fr; }
   .work-grid { grid-template-columns: 1fr 1fr; }
   .timeline-item { padding: 20px; }
