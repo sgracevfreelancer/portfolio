@@ -1,0 +1,12 @@
+{
+  "name": "sgv-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Neo-brutalist graphic design portfolio with an auto-populating gallery.",
+  "scripts": {
+    "build:gallery": "node scripts/build-gallery.js",
+    "watch:gallery": "node scripts/watch-gallery.js",
+    "start": "npx --yes serve .",
+    "dev": "node scripts/watch-gallery.js & npx --yes serve ."
+  }
+}

@@ -1,0 +1,23 @@
+.DS_Store
+node_modules/
+
+# Local editor and assistant configuration
+.claude/
+.vscode/
+
+# Local environment and logs
+.env
+.env.*
+!.env.example
+*.log
+
+# Generated and temporary output
+dist/
+build/
+coverage/
+.cache/
+tmp/
+temp/
+
+# Repository automation is not part of the portfolio site
+.github/

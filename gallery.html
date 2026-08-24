@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery — Shay V</title>
+<meta name="description" content="Full gallery of graphic design work, filterable by category and sortable by date or name.">
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="locked">
+
+<div class="gate" id="gate">
+  <div class="gate-panel panel-strong">
+    <span class="eyebrow">Private</span>
+    <h2>Password protected.</h2>
+    <p class="lede" style="margin-bottom:26px;">This portfolio is private. Enter the password to continue.</p>
+    <form id="gate-form">
+      <input type="password" id="gate-input" placeholder="Password" autocomplete="current-password" required>
+      <button type="submit" class="btn primary">Unlock →</button>
+    </form>
+    <p class="gate-error" id="gate-error" hidden></p>
+  </div>
+</div>
+<script src="js/auth-gate.js"></script>
+
+<header class="site-nav">
+  <nav class="nav-inner panel">
+    <a href="index.html" class="brand"><span class="dot"></span>Shay V</a>
+    <ul class="nav-links panel-strong">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="martellotto-wines.html">Case Study</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu">&#9776;</button>
+  </nav>
+</header>
+
+<section class="gallery-header">
+  <div class="wrap">
+    <span class="eyebrow">Gallery</span>
+    <h2>Every piece, in one place.</h2>
+    <p class="lede">A curated archive of visual work across branding, packaging, campaigns, and digital content.</p>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="gallery-controls panel">
+      <div class="filter-pills" id="filter-pills"></div>
+      <div class="sort-control">
+        <label for="sort-select">Sort by</label>
+        <select id="sort-select">
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+          <option value="name-asc">Name (A–Z)</option>
+          <option value="name-desc">Name (Z–A)</option>
+          <option value="category">Category</option>
+        </select>
+      </div>
+    </div>
+
+    <p class="gallery-count" id="gallery-count"></p>
+
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" aria-label="Close">&times;</button>
+  <button class="lightbox-nav prev" aria-label="Previous">&#8592;</button>
+  <button class="lightbox-nav next" aria-label="Next">&#8594;</button>
+  <div class="lightbox-inner panel-strong">
+    <span class="lightbox-counter"></span>
+    <img src="" alt="">
+    <video controls playsinline style="display:none;"></video>
+    <div class="lightbox-meta">
+      <h3></h3>
+      <span></span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>&copy; <span data-year></span> Shay V. - Graphic Design Portfolio.</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/gallery.js"></script>
+</body>
+</html>
