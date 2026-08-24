@@ -143,7 +143,7 @@ body.locked > *:not(.gate):not(script) {
   padding: 0 24px;
 }
 
-section { padding: 110px 0; position: relative; }
+section { padding: 50px 0; position: relative; }
 
 section .eyebrow {
   display: inline-flex;
