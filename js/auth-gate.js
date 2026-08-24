@@ -13,24 +13,12 @@
 //   - A 7-day "remember me" cookie so the password isn't re-entered
 //     constantly, and basic rate limiting (5 attempts / 3 minutes) against
 //     casual guessing through the form.
-//   - Right-click and common DevTools/view-source shortcuts (F12,
-//     Ctrl/Cmd+Shift+I/J/C/K, Ctrl/Cmd+U) are blocked, and an open DevTools
-//     panel is detected heuristically (window outer/inner size gap) and
-//     responded to by clearing the session cookie and reshowing this gate.
 // It will NOT stop someone who fetches the raw HTML directly (curl, a
 // non-JS crawler, "view source") from reading whatever static text is
 // already in that HTML — that's a hard limit of client-only auth on static
 // hosting. Pair this with robots.txt (already added) to keep compliant
 // search/AI crawlers from indexing the site in the first place.
 //
-// On the DevTools/right-click blocking specifically: this is a speed bump,
-// not a lock. Browser menus (View > Developer Tools), undocked/separate
-// DevTools windows on some browsers, disabling JavaScript, or using a
-// different browser/extension can all get around it. Any determined visitor
-// with browser dev tools can still read the fetched gallery data or the
-// page's DOM. Treat this the same as the rest of the gate: it stops casual
-// snooping, not a motivated inspection.
-
 (function () {
   const SALT_HEX = "6ee605a66347a6d384fa5a79b32c07ff";
   const EXPECTED_HASH_HEX =
@@ -185,27 +173,6 @@
     window.dispatchEvent(new Event("site:unlocked"));
   }
 
-  // Brings the lock screen back over the page (used by the DevTools
-  // detector below) without a full page reload. Existing dynamically
-  // loaded content (gallery grid, drafts grid) stays hidden behind the
-  // `body.locked` CSS rule the same way it's hidden before first unlock.
-  function showGate() {
-    document.body.classList.add("locked");
-    if (gate) gate.style.display = "";
-    if (input) input.value = "";
-    hideMessage();
-    updateLockoutUI();
-    window.dispatchEvent(new Event("site:locked"));
-  }
-
-  // Clears the session cookie and re-shows the gate. Called when an open
-  // DevTools panel is detected, so re-entering the page requires the
-  // password again.
-  function forceRelock() {
-    deleteCookie(COOKIE_NAME);
-    showGate();
-  }
-
   function unlock(hashHex) {
     setCookie(COOKIE_NAME, hashHex, COOKIE_MAX_AGE);
     clearAttempts();
@@ -218,8 +185,8 @@
     hideGate();
   }
 
-  // Wire up the form regardless of current lock state — forceRelock() can
-  // bring the gate back after the page already loaded unlocked.
+  // Wire up the form regardless of current lock state so the unlock remains
+  // available if the page is opened without a valid cookie.
   if (form) {
     updateLockoutUI();
 
@@ -253,49 +220,4 @@
     });
   }
 
-  // ---------- right-click + DevTools deterrents ----------
-  // Best-effort only — see the file header comment. These listeners are
-  // active at all times (locked or unlocked) so the raw markup is harder
-  // to inspect even before the password is entered.
-
-  document.addEventListener("contextmenu", (e) => {
-    e.preventDefault();
-  });
-
-  document.addEventListener("keydown", (e) => {
-    const k = e.key ? e.key.toUpperCase() : "";
-    const isDevToolsCombo =
-      k === "F12" ||
-      ((e.ctrlKey || e.metaKey) && e.shiftKey && ["I", "J", "C", "K"].includes(k)) ||
-      ((e.ctrlKey || e.metaKey) && (e.altKey) && ["I", "J", "C", "K"].includes(k)) ||
-      ((e.ctrlKey || e.metaKey) && k === "U");
-    if (isDevToolsCombo) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  });
-
-  // Heuristic DevTools-open detector: when DevTools is docked (bottom,
-  // side, or separate window in most browsers), the gap between the
-  // outer window and the inner viewport grows past a normal-chrome-only
-  // threshold. Not foolproof — undocked/floating DevTools on some setups,
-  // or a browser with unusual chrome, can evade it — but catches the
-  // common case of opening DevTools in the same window.
-  const DEVTOOLS_GAP_PX = 160;
-  let devToolsOpen = false;
-
-  function checkDevTools() {
-    const widthGap = window.outerWidth - window.innerWidth;
-    const heightGap = window.outerHeight - window.innerHeight;
-    const isOpen = widthGap > DEVTOOLS_GAP_PX || heightGap > DEVTOOLS_GAP_PX;
-
-    if (isOpen && !devToolsOpen) {
-      devToolsOpen = true;
-      forceRelock();
-    } else if (!isOpen && devToolsOpen) {
-      devToolsOpen = false;
-    }
-  }
-
-  setInterval(checkDevTools, 500);
 })();
