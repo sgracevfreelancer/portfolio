@@ -590,6 +590,7 @@ header.site-nav {
   padding: 26px 28px;
   align-items: start;
 }
+
 .timeline-item .years {
   display: inline-block;
   font-family: var(--font-mono);
@@ -780,6 +781,9 @@ footer {
   background: var(--pink);
   color: var(--ink);
   box-shadow: var(--shadow-sm);
+}
+.hero-visual.panel{
+  background: var(--pink);
 }
 .sort-control {
   display: flex;
